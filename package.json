@@ -4,8 +4,9 @@
   "description": "A website that lets you see your stats in Rainbow 6 siege.",
   "main": "server.js",
   "scripts": {
-    "start": "node server/server.js",
-    "server": "nodemon server/server.js"
+    "start": "cd client && yarn start",
+    "server": "nodemon server/server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn start\""
   },
   "author": "ahmedrafayat",
   "license": "MIT",
