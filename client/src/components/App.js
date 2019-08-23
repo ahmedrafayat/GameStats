@@ -1,6 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import Header from './Header'
+require('dotenv').config({ path: './client/config.env' });
 // import octane from '../assets/octane.png'
 
 class App extends React.Component {
