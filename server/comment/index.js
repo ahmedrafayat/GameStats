@@ -18,7 +18,13 @@ function list(req, res) {
   });
 }
 
+function remove(req, res) {
+  console.log(req);
+  res.status(200).send("Okay!");
+}
+
 module.exports = {
   create,
-  list
+  list,
+  remove
 };
