@@ -1,20 +1,113 @@
 .profile{
     display: grid;
-    grid-template-columns: 33% auto;
-    grid-template-rows: auto;
-    grid-gap: 2rem 2rem;
+    grid-template-columns: repeat(8,12.5%);
+    grid-template-rows: 1fr auto;
+    /* grid-gap: 2rem 2rem; */
 }
+
 .profile-card{
     grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: auto;
-    grid-row-end: auto;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    margin: 0rem 1rem 2vh 1rem;
+    background-color: #F9F9F9 !important;
+}
+
+.ui.card {
+    background-color: #F9F9F9 !important;
+}
+
+.square.image > img, .square.image {
+    border-radius: 3rem !important;
+}
+
+.square.image>img{
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    border-radius: 3rem;
+}
+
+
+.ui.card>.content.details {
+    background-color: #C07583 !important;
+    border-top-left-radius: 3rem !important;
+    border-top-right-radius: 3rem !important;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    padding-left: 2rem;
+}
+
+.ui.card>.extra.content.level {
+    background-color: #C07583 !important;
+    border-bottom-left-radius: 3rem !important;
+    border-bottom-right-radius: 3rem !important;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    border-radius: 3rem;
+    text-align: center;
 }
 
 .overview-card{
-    grid-column-start: 2;
-    grid-column-end: 3;
-    grid-row-start: auto;
-    grid-row-end: auto;
+    grid-column-start: 4;
+    grid-column-end: 9;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    margin: 0rem 1rem 2vh 1rem;
+    background-color: #E62348;
+    padding: 0.8rem;
+    border-radius: 3rem;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 
+.profile  div {
+    color: honeydew !important;
+}
+
+.legend-stats-container {
+    grid-column: auto / span 8;
+    grid-row: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    /* grid-gap: 2rem 2rem; */
+}
+
+.legend-card {
+    grid-column-start: auto;
+    grid-column-end: span 1;
+    grid-row-start: auto;
+    grid-row-end: span 1;
+    background-color: #E62348;
+    margin: 0rem 1rem 2vh 1rem;
+    border-radius: 3rem;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.legend-card-header{
+    padding: 0.8rem;
+    
+}
+
+.legend-card-header > .ui.medium.header {
+    text-align: center;
+}
+
+.statistic > .label {
+    font-family: 'Lato' !important;
+}
+
+.legend-card-content {
+    display: flex;
+    flex-direction: row;
+}
+
+.legend-card-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    margin: 1rem 2rem 0rem 2rem;
+}
+
+.legend-card-image > img {
+    max-height: 30vh;
+    margin: 0vh 0vh 1vh 1vh;
+    /* background-color: aliceblue; */
+}
