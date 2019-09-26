@@ -12,7 +12,7 @@ class App extends React.Component {
     return (
       <div>
         <Helmet>
-          <style>{"body { background-color: #c70d3a; }"}</style>
+          <style>{"body { background-color: #F9F9F9; z-index: -1; }"}</style>
         </Helmet>
         <div>
           <BrowserRouter>

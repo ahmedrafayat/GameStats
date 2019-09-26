@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import _ from "lodash";
 import "../styles/UserProfile.css";
 
 class UserProfile extends React.Component {
@@ -17,19 +18,30 @@ class UserProfile extends React.Component {
     axios
       .get(`/api/v1/profile/${platform}/${username}`)
       .then(data => {
-        console.log(data);
+        console.log(data.data.data);
         this.setState({ userProfile: data.data.data, isLoading: false });
       })
       .catch(error => {
-        if (error.response.status) {
-          this.setState({ userProfile: null, isLoading: false, isServerDown: true });
-        }
+        // var response = error.response;
+        console.log(error.config);
+        // if (!response.status) {
+        //   this.setState({ userProfile: null, isLoading: false, isServerDown: true });
+        // }
       });
+  }
+
+  rendersomething() {
+    return <h1>hello</h1>;
   }
 
   render() {
     let { userProfile, isServerDown, isLoading } = this.state;
-    console.log(userProfile);
+    let legendStats = null;
+    if (userProfile) {
+      legendStats = _.cloneDeep(userProfile.segments);
+      legendStats.shift();
+      console.log(Object.entries(legendStats[1].stats));
+    }
     return (
       <div
         className="main-container"
@@ -48,7 +60,7 @@ class UserProfile extends React.Component {
         {isLoading && (
           <div className="ui segment" style={{ flexGrow: "1", height: "20vh", backgroundColor: "#953036" }}>
             <div className="ui active inverted dimmer">
-              <div class="ui massive text loader">Loading</div>
+              <div className="ui massive text loader">Loading</div>
             </div>
           </div>
         )}
@@ -59,14 +71,14 @@ class UserProfile extends React.Component {
                 <div className="square image">
                   <img src={userProfile.platformInfo.avatarUrl} alt={userProfile.platformInfo.platformUserHandle} />
                 </div>
-                <div className="content">
+                <div className="content details" style={{ marginTop: "1rem" }}>
                   <h4>{userProfile.platformInfo.platformUserHandle}</h4>
                   <div className="meta">
                     <span className="date">{userProfile.platformInfo.platformSlug}</span>
                   </div>
-                  <div className="description">Kristy is an art director living in New York.</div>
+                  <div className="description">Rank {userProfile.segments[0].stats.rankScore.value}</div>
                 </div>
-                <div className="extra content">
+                <div className="extra content level">
                   <div>Level ${userProfile.segments[0].stats.level.displayValue}</div>
                 </div>
               </div>
@@ -95,122 +107,101 @@ class UserProfile extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="legend-card-lifeline">
-              <div className="legend-card-header">
-                <div className="ui small header">LIFELINE</div>
-              </div>
-              <div className="legend-card-content">
-                <div className="legend-card-image">
-                  <img src="https://trackercdn.com/cdn/apex.tracker.gg/legends/pathfinder-tall.png"></img>
-                </div>
-                <div className="legend-card-stats" style={{ marginLeft: "2vh" }}>
-                  <div className="ui tiny three statistics">
-                    <div class="statistic">
-                      <div class="value">22</div>
-                      <div class="label">Saves</div>
+            <div className="legend-stats-container">
+              {legendStats.map(legend => (
+                <div className="legend-card">
+                  <div className="legend-card-header">
+                    <div className="ui medium header">{legend.metadata.name}</div>
+                  </div>
+                  <div className="legend-card-content">
+                    <div className="legend-card-image">
+                      <img src={legend.metadata.tallImageUrl}></img>
                     </div>
-                    <div class="statistic">
-                      <div class="value">23</div>
-                      <div class="label">Saves</div>
-                    </div>
-                    <div class="statistic">
-                      <div class="value">23</div>
-                      <div class="label">Saves</div>
-                    </div>
-                    <div class="statistic">
-                      <div class="value">23</div>
-                      <div class="label">Saves</div>
+                    <div className="legend-card-stats">
+                      {Object.entries(legend.stats).map(stat => (
+                        <div className="statistic">
+                          <div className="value">{stat[1].displayValue}</div>
+                          <div className="label">{stat[1].displayName}</div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="legend-card-pathfinder">
-              <div className="legend-card-header">
-                <div className="ui small header">PATHFINDER</div>
-              </div>
-              <div className="legend-card-content">
-                <div className="legend-card-image"></div>
-                <div className="legend-card-stats"></div>
-              </div>
-            </div>
-            <div className="legend-card-wraith">
-              <div className="legend-card-header">
-                <div className="ui small header">WRAITH</div>
-              </div>
-              <div className="legend-card-content">
-                <div className="legend-card-image"></div>
-                <div className="legend-card-stats"></div>
-              </div>
-            </div>
-            <div className="legend-card-bangalore">
-              <div className="legend-card-header">
-                <div className="ui small header">BANGALORE</div>
-              </div>
-              <div className="legend-card-content">
-                <div className="legend-card-image"></div>
-                <div className="legend-card-stats"></div>
-              </div>
-            </div>
-            <div className="legend-card-gibraltar">
-              <div className="legend-card-header">
-                <div className="ui small header">GIBRALTAR</div>
-              </div>
-              <div className="legend-card-content">
-                <div className="legend-card-image"></div>
-                <div className="legend-card-stats"></div>
-              </div>
-            </div>
-            <div className="legend-card-caustic">
-              <div className="legend-card-header">
-                <div className="ui small header">CAUSTIC</div>
-              </div>
-              <div className="legend-card-content">
-                <div className="legend-card-image"></div>
-                <div className="legend-card-stats"></div>
-              </div>
-            </div>
-            <div className="legend-card-octane">
-              <div className="legend-card-header">
-                <div className="ui small header">OCTANE</div>
-              </div>
-              <div className="legend-card-content">
-                <div className="legend-card-image"></div>
-                <div className="legend-card-stats"></div>
-              </div>
-            </div>
-            <div className="legend-card-mirage">
-              <div className="legend-card-header">
-                <div className="ui small header">MIRAGE</div>
-              </div>
-              <div className="legend-card-content">
-                <div className="legend-card-image"></div>
-                <div className="legend-card-stats"></div>
-              </div>
-            </div>
-            <div className="legend-card-wattson">
-              <div className="legend-card-header">
-                <div className="ui small header">WATTSON</div>
-              </div>
-              <div className="legend-card-content">
-                <div className="legend-card-image"></div>
-                <div className="legend-card-stats"></div>
-              </div>
-            </div>
-            <div className="legend-card-bloodhound">
-              <div className="legend-card-header">
-                <div className="ui small header">BLOODHOUND</div>
-              </div>
-              <div className="legend-card-content">
-                <div className="legend-card-image"></div>
-                <div className="legend-card-stats"></div>
-              </div>
+              ))}
             </div>
           </div>
         )}
       </div>
     );
   }
+}
+
+function Render({ legendStats }) {
+  console.log(legendStats);
+  return (
+    <div className="legend-stats">
+      <div className="legend-card">
+        <div className="legend-card-header">
+          <div className="ui small header">LIFELINE</div>
+        </div>
+        <div className="legend-card-content">
+          <div className="legend-card-image">
+            <img src="https://trackercdn.com/cdn/apex.tracker.gg/legends/pathfinder-tall.png"></img>
+          </div>
+          <div className="legend-card-stats" style={{ marginLeft: "2vh" }}>
+            <div className="ui tiny three statistics">
+              <div className="statistic">
+                <div className="value">22</div>
+                <div className="label">Saves</div>
+              </div>
+              <div className="statistic">
+                <div className="value">23</div>
+                <div className="label">Saves</div>
+              </div>
+              <div className="statistic">
+                <div className="value">23</div>
+                <div className="label">Saves</div>
+              </div>
+              <div className="statistic">
+                <div className="value">23</div>
+                <div className="label">Saves</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="legend-card">
+        <div className="legend-card-header">
+          <div className="ui small header">LIFELINE</div>
+        </div>
+        <div className="legend-card-content">
+          <div className="legend-card-image">
+            <img src="https://trackercdn.com/cdn/apex.tracker.gg/legends/pathfinder-tall.png"></img>
+          </div>
+          <div className="legend-card-stats" style={{ marginLeft: "2vh" }}>
+            <div className="ui tiny three statistics">
+              <div className="statistic">
+                <div className="value">22</div>
+                <div className="label">Saves</div>
+              </div>
+              <div className="statistic">
+                <div className="value">23</div>
+                <div className="label">Saves</div>
+              </div>
+              <div className="statistic">
+                <div className="value">23</div>
+                <div className="label">Saves</div>
+              </div>
+              <div className="statistic">
+                <div className="value">23</div>
+                <div className="label">Saves</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default UserProfile;
