@@ -1,10 +1,8 @@
 import React from "react";
-import axios from "axios";
-import apex_logo from "../assets/apex_logo.png";
 import { Link } from "react-router-dom";
 import "../styles/SearchBar.css";
 
-const base_url = process.env.TRACKER_API_URL || "http://localhost:5000/api/v1/profile/";
+// const base_url = process.env.TRACKER_API_URL || "http://localhost:5000/api/v1/profile/";
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -16,14 +14,10 @@ class SearchBar extends React.Component {
     };
   }
 
-  componentDidMount() {
-    console.log(this.state.selectedPlatform);
-    console.log(base_url);
-  }
   render() {
     return (
       <div className="search-bar container">
-        <form onSubmit={e => e.preventDefault()} className="ui form large" style={{ width: "80%" }}>
+        <form onSubmit={e => e.preventDefault()} className="ui form big" style={{ width: "80%" }}>
           <div
             className="field"
             style={{
@@ -44,8 +38,8 @@ class SearchBar extends React.Component {
               name="username"
               value={this.state.username}
             />
-            <div className="ui icon buttons large" style={{ flex: 2 }}>
-              <button className="ui icon button" onClick={() => this.setState({ selectedPlatform: "origin" })}>
+            <div className="ui icon buttons big" style={{ flex: 2 }}>
+              <button className="ui active icon button" onClick={() => this.setState({ selectedPlatform: "origin" })}>
                 <i className="windows icon"></i>
               </button>
               <button className="ui icon button" onClick={() => this.setState({ selectedPlatform: "playstation" })}>
@@ -60,8 +54,7 @@ class SearchBar extends React.Component {
                 pathname: `/profile/${this.state.selectedPlatform}/${this.state.username}`,
                 state: { selectedPlatform: this.state.selectedPlatform }
               }}
-              className="ui animated button large"
-              style={{ flex: "2", width: "10vh" }}
+              className="ui animated button big"
               tabIndex="0">
               <div className="visible content">Next</div>
               <div className="hidden content">

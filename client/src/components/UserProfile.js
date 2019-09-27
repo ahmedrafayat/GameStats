@@ -19,7 +19,7 @@ class UserProfile extends React.Component {
     axios
       .get(`/api/v1/profile/${platform}/${username}`)
       .then(data => {
-        console.log(data.data.data);
+        // console.log(data.data.data);
         this.setState({ userProfile: data.data.data, isLoading: false });
       })
       .catch(error => {
@@ -29,8 +29,6 @@ class UserProfile extends React.Component {
         //   this.setState({ userProfile: null, isLoading: false, isServerDown: true });
         // }
       });
-
-    axios.get(`/api/v1`);
   }
 
   rendersomething() {
@@ -119,7 +117,7 @@ class UserProfile extends React.Component {
                     </div>
                     <div className="legend-card-content">
                       <div className="legend-card-image">
-                        <img src={legend.metadata.tallImageUrl}></img>
+                        <img src={legend.metadata.tallImageUrl} alt={legend.metadata.name}></img>
                       </div>
                       <div className="legend-card-stats">
                         {Object.entries(legend.stats).map(stat => (
@@ -134,20 +132,20 @@ class UserProfile extends React.Component {
                 ))}
             </div>
             <div className="comments-container">
-              <div class="ui comments">
-                <h3 class="ui dividing header">Comments</h3>
-                <div class="comment">
-                  <div class="avatar">
-                    <img src={userProfile.platformInfo.avatarUrl} />
+              <div className="ui comments">
+                <h3 className="ui dividing header">Comments</h3>
+                <div className="comment">
+                  <div className="avatar">
+                    <img src={userProfile.platformInfo.avatarUrl} alt={userProfile.platformInfo.platformUserHandle} />
                   </div>
-                  <div class="content">
-                    <div class="author">Matt</div>
-                    <div class="metadata">
-                      <span class="date">Today at 5:42PM</span>
+                  <div className="content">
+                    <div className="author">Matt</div>
+                    <div className="metadata">
+                      <span className="date">Today at 5:42PM</span>
                     </div>
                     <div className="text black">This has been very useful for my research. Thanks as well!</div>
-                    <div class="actions">
-                      <div class="reply">Reply</div>
+                    <div className="actions">
+                      <div className="reply">Reply</div>
                     </div>
                   </div>
                 </div>
