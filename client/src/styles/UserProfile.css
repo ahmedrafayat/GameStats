@@ -83,7 +83,6 @@
 
 .legend-card-header{
     padding: 0.8rem;
-    
 }
 
 .legend-card-header > .ui.medium.header {
@@ -110,4 +109,15 @@
     max-height: 30vh;
     margin: 0vh 0vh 1vh 1vh;
     /* background-color: aliceblue; */
+}
+
+.comments-container {
+    grid-column: auto / span 8;
+    grid-row: auto;
+    margin-bottom: 30vh;
+    margin-top: 10vh;
+}
+
+div.comments-container * {
+    color: black !important;
 }

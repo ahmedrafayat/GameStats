@@ -1,11 +1,11 @@
 import React from "react";
 import "../styles/App.css";
 import { Helmet } from "react-helmet";
+import SearchBar from "./SearchBar";
 import Header from "./Header";
 import { BrowserRouter, Route } from "react-router-dom";
 import UserProfile from "./UserProfile";
 require("dotenv").config({ path: "./client/config.env" });
-// import octane from '../assets/octane.png'
 
 class App extends React.Component {
   render() {
@@ -17,6 +17,7 @@ class App extends React.Component {
         <div>
           <BrowserRouter>
             <Header />
+            <SearchBar />
             <Route path="/profile/:platform/:username" component={UserProfile}></Route>
           </BrowserRouter>
         </div>

@@ -1,0 +1,24 @@
+.social-login-buttons {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row wrap;
+    margin-bottom: 4vh;
+    margin-left: 0.5vh;
+    margin-right: 0.5vh;
+}
+
+.ui.google.plus.button {
+    flex: 1;
+}
+
+.ui.facebook.button {
+    flex: 1;
+}
+
+.button-gap {
+    flex:0.3;
+}
+
+.ui.horizontal.divider {
+    margin-bottom: 4vh;
+}

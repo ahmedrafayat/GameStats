@@ -9,7 +9,8 @@ class UserProfile extends React.Component {
     this.state = {
       userProfile: null,
       isLoading: true,
-      isServerDown: false
+      isServerDown: false,
+      comments: null
     };
   }
 
@@ -28,6 +29,8 @@ class UserProfile extends React.Component {
         //   this.setState({ userProfile: null, isLoading: false, isServerDown: true });
         // }
       });
+
+    axios.get(`/api/v1`);
   }
 
   rendersomething() {
@@ -37,10 +40,10 @@ class UserProfile extends React.Component {
   render() {
     let { userProfile, isServerDown, isLoading } = this.state;
     let legendStats = null;
-    if (userProfile) {
+    if (userProfile && userProfile.segments.length > 1) {
       legendStats = _.cloneDeep(userProfile.segments);
       legendStats.shift();
-      console.log(Object.entries(legendStats[1].stats));
+      console.log(Object.entries(legendStats));
     }
     return (
       <div
@@ -108,100 +111,53 @@ class UserProfile extends React.Component {
               </div>
             </div>
             <div className="legend-stats-container">
-              {legendStats.map(legend => (
-                <div className="legend-card">
-                  <div className="legend-card-header">
-                    <div className="ui medium header">{legend.metadata.name}</div>
-                  </div>
-                  <div className="legend-card-content">
-                    <div className="legend-card-image">
-                      <img src={legend.metadata.tallImageUrl}></img>
+              {legendStats.length &&
+                legendStats.map(legend => (
+                  <div className="legend-card">
+                    <div className="legend-card-header">
+                      <div className="ui medium header">{legend.metadata.name}</div>
                     </div>
-                    <div className="legend-card-stats">
-                      {Object.entries(legend.stats).map(stat => (
-                        <div className="statistic">
-                          <div className="value">{stat[1].displayValue}</div>
-                          <div className="label">{stat[1].displayName}</div>
-                        </div>
-                      ))}
+                    <div className="legend-card-content">
+                      <div className="legend-card-image">
+                        <img src={legend.metadata.tallImageUrl}></img>
+                      </div>
+                      <div className="legend-card-stats">
+                        {Object.entries(legend.stats).map(stat => (
+                          <div className="statistic">
+                            <div className="value">{stat[1].displayValue}</div>
+                            <div className="label">{stat[1].displayName}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+            <div className="comments-container">
+              <div class="ui comments">
+                <h3 class="ui dividing header">Comments</h3>
+                <div class="comment">
+                  <div class="avatar">
+                    <img src={userProfile.platformInfo.avatarUrl} />
+                  </div>
+                  <div class="content">
+                    <div class="author">Matt</div>
+                    <div class="metadata">
+                      <span class="date">Today at 5:42PM</span>
+                    </div>
+                    <div className="text black">This has been very useful for my research. Thanks as well!</div>
+                    <div class="actions">
+                      <div class="reply">Reply</div>
                     </div>
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         )}
       </div>
     );
   }
-}
-
-function Render({ legendStats }) {
-  console.log(legendStats);
-  return (
-    <div className="legend-stats">
-      <div className="legend-card">
-        <div className="legend-card-header">
-          <div className="ui small header">LIFELINE</div>
-        </div>
-        <div className="legend-card-content">
-          <div className="legend-card-image">
-            <img src="https://trackercdn.com/cdn/apex.tracker.gg/legends/pathfinder-tall.png"></img>
-          </div>
-          <div className="legend-card-stats" style={{ marginLeft: "2vh" }}>
-            <div className="ui tiny three statistics">
-              <div className="statistic">
-                <div className="value">22</div>
-                <div className="label">Saves</div>
-              </div>
-              <div className="statistic">
-                <div className="value">23</div>
-                <div className="label">Saves</div>
-              </div>
-              <div className="statistic">
-                <div className="value">23</div>
-                <div className="label">Saves</div>
-              </div>
-              <div className="statistic">
-                <div className="value">23</div>
-                <div className="label">Saves</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="legend-card">
-        <div className="legend-card-header">
-          <div className="ui small header">LIFELINE</div>
-        </div>
-        <div className="legend-card-content">
-          <div className="legend-card-image">
-            <img src="https://trackercdn.com/cdn/apex.tracker.gg/legends/pathfinder-tall.png"></img>
-          </div>
-          <div className="legend-card-stats" style={{ marginLeft: "2vh" }}>
-            <div className="ui tiny three statistics">
-              <div className="statistic">
-                <div className="value">22</div>
-                <div className="label">Saves</div>
-              </div>
-              <div className="statistic">
-                <div className="value">23</div>
-                <div className="label">Saves</div>
-              </div>
-              <div className="statistic">
-                <div className="value">23</div>
-                <div className="label">Saves</div>
-              </div>
-              <div className="statistic">
-                <div className="value">23</div>
-                <div className="label">Saves</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
 }
 
 export default UserProfile;
