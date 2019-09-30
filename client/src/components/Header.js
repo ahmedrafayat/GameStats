@@ -1,6 +1,5 @@
 import React from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
-import FacebookLogin from "react-facebook-login";
 import config from "../config";
 import { Link } from "react-router-dom";
 
@@ -21,38 +20,31 @@ class Header extends React.Component {
     const user = JSON.parse(window.localStorage.getItem("userInfo"));
     const isLoggedIn = JSON.parse(window.localStorage.getItem("isLoggedIn"));
     try {
-      console.log(user);
-      console.log(isLoggedIn);
       if (user.accessToken.length > 0 && isLoggedIn === true) {
         this.setState({ isLoggedIn: true, userInfo: user });
       } else {
         console.log("Unresolved Error", user, isLoggedIn);
       }
     } catch (err) {
-      console.log(err.message);
-      if (err.name === "TypeError") {
+      if (err.name) {
         this.setState({ userInfo: null, isLoggedIn: false });
       }
     }
   }
 
   onLoginSuccess(response) {
-    console.log("Login Success!", response);
     let user = {
       name: response.profileObj.name,
       accessToken: response.accessToken
     };
-    console.log(JSON.stringify(user));
     window.localStorage.setItem("isLoggedIn", true);
     window.localStorage.setItem("userInfo", JSON.stringify(user));
     this.setState({ isLoggedIn: true, userInfo: user });
-    console.log(JSON.parse(window.localStorage.getItem("userInfo")));
   }
   onLoginFailure(response) {
     console.log("Login Failure!", response);
   }
   onLogoutSuccess(response) {
-    console.log("Logout success!", response);
     window.localStorage.removeItem("isLoggedIn");
     window.localStorage.removeItem("userInfo");
     this.setState({ userInfo: null, isLoggedIn: false });
@@ -64,7 +56,6 @@ class Header extends React.Component {
 
   render() {
     const { isLoggedIn, userInfo } = this.state;
-    console.log("user is ", userInfo);
     return (
       <div className="ui top fixed borderless large menu" style={{ backgroundColor: "#141724" }}>
         <div className="header item" style={{ color: "#FFFFFF", fontWeight: "bolder" }}>
@@ -102,16 +93,6 @@ class Header extends React.Component {
             </div>
           </div>
         )}
-        {/* <div className="item">
-            <FacebookLogin
-              appId=""
-              autoLoad={true}
-              fields="name,email,picture"
-              callback={this.responseFacebook}
-              cssClass="ui facebook button large"
-              icon="facebook icon"
-            />
-          </div> */}
       </div>
     );
   }

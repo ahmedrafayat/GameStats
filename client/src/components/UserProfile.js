@@ -19,15 +19,18 @@ class UserProfile extends React.Component {
     axios
       .get(`/api/v1/profile/${platform}/${username}`)
       .then(data => {
-        // console.log(data.data.data);
         this.setState({ userProfile: data.data.data, isLoading: false });
       })
       .catch(error => {
-        // var response = error.response;
-        console.log(error.config);
-        // if (!response.status) {
-        //   this.setState({ userProfile: null, isLoading: false, isServerDown: true });
-        // }
+        console.log(error.response);
+      });
+    axios
+      .get(`/api/v1/comments/${username}`)
+      .then(data => {
+        this.setState({ comments: data.data });
+      })
+      .catch(error => {
+        console.log("Could not fetch comments");
       });
   }
 
@@ -36,12 +39,11 @@ class UserProfile extends React.Component {
   }
 
   render() {
-    let { userProfile, isServerDown, isLoading } = this.state;
+    let { userProfile, isServerDown, isLoading, comments } = this.state;
     let legendStats = null;
     if (userProfile && userProfile.segments.length > 1) {
       legendStats = _.cloneDeep(userProfile.segments);
       legendStats.shift();
-      console.log(Object.entries(legendStats));
     }
     return (
       <div
@@ -134,21 +136,24 @@ class UserProfile extends React.Component {
             <div className="comments-container">
               <div className="ui comments">
                 <h3 className="ui dividing header">Comments</h3>
-                <div className="comment">
-                  <div className="avatar">
-                    <img src={userProfile.platformInfo.avatarUrl} alt={userProfile.platformInfo.platformUserHandle} />
-                  </div>
-                  <div className="content">
-                    <div className="author">Matt</div>
-                    <div className="metadata">
-                      <span className="date">Today at 5:42PM</span>
+                {comments &&
+                  comments.map(comment => (
+                    <div className="comment">
+                      <div className="avatar">
+                        <img src={userProfile.platformInfo.avatarUrl} alt={userProfile.platformInfo.platformUserHandle} />
+                      </div>
+                      <div className="content">
+                        <div className="author">{comment.commentBy}</div>
+                        <div className="metadata">
+                          <span className="date">{comment.commentAt}</span>
+                        </div>
+                        <div className="text black">{comment.comment}</div>
+                        <div className="actions">
+                          <div className="reply">Reply</div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="text black">This has been very useful for my research. Thanks as well!</div>
-                    <div className="actions">
-                      <div className="reply">Reply</div>
-                    </div>
-                  </div>
-                </div>
+                  ))}
               </div>
             </div>
           </div>

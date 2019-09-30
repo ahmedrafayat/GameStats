@@ -1,9 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/SearchBar.css";
-
-// const base_url = process.env.TRACKER_API_URL || "http://localhost:5000/api/v1/profile/";
-
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);

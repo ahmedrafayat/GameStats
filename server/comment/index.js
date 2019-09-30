@@ -1,11 +1,12 @@
 const Comment = require("./comment");
 
 function create(req, res) {
-  console.log(req.body);
   var comment = new Comment(req.body);
   comment.save(err => {
-    console.log("Error in creating");
-    res.redirect("/");
+    if (err) {
+      console.log("Error in creating ", err);
+    }
+    res.status(200).send(comment);
   });
 }
 
@@ -19,12 +20,24 @@ function list(req, res) {
 }
 
 function remove(req, res) {
-  console.log(req);
-  res.status(200).send("Okay!");
+  Comment.findByIdAndDelete(req.params.id, (err, val) => {
+    res.status(200).send("Okay!");
+  });
+}
+
+function getByName(req, res) {
+  Comment.find({ commentTo: req.params.gamertag }, (err, comments) => {
+    if (!err) {
+      res.status(200).send(comments);
+    } else {
+      res.send(error);
+    }
+  });
 }
 
 module.exports = {
   create,
   list,
-  remove
+  remove,
+  getByName
 };

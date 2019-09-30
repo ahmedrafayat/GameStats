@@ -3,10 +3,10 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const CommentSchema = new Schema({
-  comment: { type: String },
-  commentBy: { type: String },
+  comment: { type: String, required: true },
+  commentBy: { type: String, required: true },
+  commentTo: { type: String, required: true },
   createdAt: { type: Date, default: Date.now }
-  // ,commentTo: {type: Schema.Types.ObjectId, ref: 'co'}
 });
 
 const Comment = mongoose.model("comments", CommentSchema);
