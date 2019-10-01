@@ -1,14 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "../styles/SearchBar.css";
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: "",
-      selectedPlatform: "origin",
-      userProfile: null
+      selectedPlatform: "origin"
     };
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  onSubmit() {
+    this.props.onChangeUsername(this.state.username, this.state.selectedPlatform);
   }
 
   render() {
@@ -46,18 +49,12 @@ class SearchBar extends React.Component {
                 <i className="xbox icon"></i>
               </button>
             </div>
-            <Link
-              to={{
-                pathname: `/profile/${this.state.selectedPlatform}/${this.state.username}`,
-                state: { selectedPlatform: this.state.selectedPlatform }
-              }}
-              className="ui animated button big"
-              tabIndex="0">
+            <button onClick={this.onSubmit} className="ui animated button big" tabIndex="0">
               <div className="visible content">Next</div>
               <div className="hidden content">
                 <i className="right arrow icon"></i>
               </div>
-            </Link>
+            </button>
           </div>
         </form>
       </div>

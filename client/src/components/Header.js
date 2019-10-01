@@ -1,7 +1,6 @@
 import React from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import config from "../config";
-import { Link } from "react-router-dom";
 
 class Header extends React.Component {
   constructor(props) {
@@ -61,9 +60,9 @@ class Header extends React.Component {
         <div className="header item" style={{ color: "#FFFFFF", fontWeight: "bolder" }}>
           GameStats
         </div>
-        <Link to="/" className="link item" style={{ color: "#FFFFFF" }}>
+        <a href="/" className="link item" style={{ color: "#FFFFFF" }}>
           Home
-        </Link>
+        </a>
         {!isLoggedIn && !userInfo ? (
           <div className="right menu">
             <div className="item">

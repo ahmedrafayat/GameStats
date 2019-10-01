@@ -1,10 +1,9 @@
 import React from "react";
 import "../styles/App.css";
 import { Helmet } from "react-helmet";
-import SearchBar from "./SearchBar";
 import Header from "./Header";
 import { BrowserRouter, Route } from "react-router-dom";
-import UserProfile from "./UserProfile";
+import Home from "../pages/Home";
 require("dotenv").config({ path: "./client/config.env" });
 
 class App extends React.Component {
@@ -12,13 +11,12 @@ class App extends React.Component {
     return (
       <div>
         <Helmet>
-          <style>{"body { background-color: #F9F9F9; z-index: -1; }"}</style>
+          <style>{"body { background-color: #222831; z-index: -1; }"}</style>
         </Helmet>
+        <Header />
         <div>
           <BrowserRouter>
-            <Header />
-            <SearchBar />
-            <Route path="/profile/:platform/:username" component={UserProfile}></Route>
+            <Route exact path="/" component={Home}></Route>
           </BrowserRouter>
         </div>
       </div>

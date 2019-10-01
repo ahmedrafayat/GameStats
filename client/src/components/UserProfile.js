@@ -10,19 +10,36 @@ class UserProfile extends React.Component {
       userProfile: null,
       isLoading: true,
       isServerDown: false,
-      comments: null
+      profileFound: null,
+      comments: null,
+      username: this.props.username,
+      platform: this.props.platform
     };
   }
 
+  componentDidUpdate(prevProps) {
+    console.log("updated", this.props.username);
+    if (this.props.username !== prevProps.username || this.props.platform !== prevProps.platform) {
+      this.setState({ username: this.props.username, platform: this.props.platform });
+      this.fetchData(this.props.username, this.props.platform);
+    }
+  }
+
   componentDidMount() {
-    const { platform, username } = this.props.match.params;
+    const { platform, username } = this.props;
+    this.setState({ username: username, platform: platform });
+    this.fetchData(username, platform);
+  }
+
+  fetchData(username, platform) {
+    console.log(platform, username);
     axios
       .get(`/api/v1/profile/${platform}/${username}`)
       .then(data => {
-        this.setState({ userProfile: data.data.data, isLoading: false });
+        this.setState({ userProfile: data.data.data, isLoading: false, profileFound: true });
       })
       .catch(error => {
-        console.log(error.response);
+        this.setState({ userProfile: null, isLoading: false, profileFound: false });
       });
     axios
       .get(`/api/v1/comments/${username}`)
@@ -39,21 +56,15 @@ class UserProfile extends React.Component {
   }
 
   render() {
-    let { userProfile, isServerDown, isLoading, comments } = this.state;
+    let { userProfile, isServerDown, isLoading, comments, profileFound } = this.state;
     let legendStats = null;
+    console.log(userProfile);
     if (userProfile && userProfile.segments.length > 1) {
       legendStats = _.cloneDeep(userProfile.segments);
       legendStats.shift();
     }
     return (
-      <div
-        className="main-container"
-        style={{
-          marginTop: "8rem",
-          display: "flex",
-          justifyContent: "center",
-          width: "100vh"
-        }}>
+      <div className="main-container">
         {isServerDown && (
           <div className="ui negative message" style={{ flex: "1" }}>
             <div className="header">Ummh, this is awkward :/</div>
@@ -67,7 +78,14 @@ class UserProfile extends React.Component {
             </div>
           </div>
         )}
-        {userProfile && (
+        {!profileFound && !isLoading && (
+          <div
+            className="ui segment"
+            style={{ flexGrow: "1", height: "20vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div className="ui aligned red header">Profile not found!</div>
+          </div>
+        )}
+        {userProfile && profileFound && (
           <div className="profile">
             <div className="profile-card">
               <div className="ui card">
@@ -82,31 +100,20 @@ class UserProfile extends React.Component {
                   <div className="description">Rank {userProfile.segments[0].stats.rankScore.value}</div>
                 </div>
                 <div className="extra content level">
-                  <div>Level ${userProfile.segments[0].stats.level.displayValue}</div>
+                  <div>Level {userProfile.segments[0].stats.level.displayValue}</div>
                 </div>
               </div>
             </div>
             <div className="overview-card">
-              <div className="ui medium header">Overview</div>
-              <div className="ui statistics">
-                <div className="statistic">
-                  <div className="value">{`${userProfile.segments[0].stats.level.displayValue}`}</div>
-                  <div className="label">Level</div>
-                </div>
-                <div className="statistic">
-                  <div className="value">{`${userProfile.segments[0].stats.kills.displayValue}`}</div>
-                  <div className="label">Kills</div>
-                </div>
-                <div className="statistic">
-                  <div className="value">2.1</div>
-                  <div className="label">Damage</div>
-                </div>
-                <div className="statistic">
-                  <div className="value">
-                    <i className="crosshairs icon"></i>
-                    22
-                  </div>
-                  <div className="label">Headshots</div>
+              <div className="ui segment">
+                <div className="ui medium centered header">Overview</div>
+                <div className="overview-stats-container">
+                  {Object.entries(userProfile.segments[0].stats).map(stat => (
+                    <div className="overview statistic">
+                      <div className="label">{`${stat[1].displayName}`}</div>
+                      <div className="value">{`${stat[1].displayValue}`}</div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -136,7 +143,7 @@ class UserProfile extends React.Component {
             <div className="comments-container">
               <div className="ui comments">
                 <h3 className="ui dividing header">Comments</h3>
-                {comments &&
+                {comments ? (
                   comments.map(comment => (
                     <div className="comment">
                       <div className="avatar">
@@ -153,7 +160,18 @@ class UserProfile extends React.Component {
                         </div>
                       </div>
                     </div>
-                  ))}
+                  ))
+                ) : (
+                  <div>Enter your first comment</div>
+                )}
+                <form class="ui reply form">
+                  <div class="field">
+                    <textarea></textarea>
+                  </div>
+                  <div class="ui primary submit labeled icon button">
+                    <i class="icon edit"></i> Add Comment
+                  </div>
+                </form>
               </div>
             </div>
           </div>

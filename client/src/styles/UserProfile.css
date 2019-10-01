@@ -1,8 +1,13 @@
+.main-container {
+    margin-top: 8rem;
+    display: flex;
+    justify-content: center;
+}
+
 .profile{
     display: grid;
     grid-template-columns: repeat(8,12.5%);
-    grid-template-rows: 1fr auto;
-    /* grid-gap: 2rem 2rem; */
+    grid-template-rows: min-content;
 }
 
 .profile-card{
@@ -11,38 +16,10 @@
     grid-row-start: 1;
     grid-row-end: 2;
     margin: 0rem 1rem 2vh 1rem;
-    background-color: #F9F9F9 !important;
 }
 
-.ui.card {
-    background-color: #F9F9F9 !important;
-}
-
-.square.image > img, .square.image {
-    border-radius: 3rem !important;
-}
-
-.square.image>img{
-    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-    border-radius: 3rem;
-}
-
-
-.ui.card>.content.details {
-    background-color: #C07583 !important;
-    border-top-left-radius: 3rem !important;
-    border-top-right-radius: 3rem !important;
-    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-    padding-left: 2rem;
-}
-
-.ui.card>.extra.content.level {
-    background-color: #C07583 !important;
-    border-bottom-left-radius: 3rem !important;
-    border-bottom-right-radius: 3rem !important;
-    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-    border-radius: 3rem;
-    text-align: center;
+.ui.small.rounded.image > div {
+    margin-top: 1vh;
 }
 
 .overview-card{
@@ -50,14 +27,9 @@
     grid-column-end: 9;
     grid-row-start: 1;
     grid-row-end: 2;
-    margin: 0rem 1rem 2vh 1rem;
-    background-color: #E62348;
-    padding: 0.8rem;
-    border-radius: 3rem;
-    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 
-.profile  div {
+.overview-card *, .legend-stats-container * {
     color: honeydew !important;
 }
 
@@ -67,7 +39,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
-    /* grid-gap: 2rem 2rem; */
 }
 
 .legend-card {
@@ -75,14 +46,16 @@
     grid-column-end: span 1;
     grid-row-start: auto;
     grid-row-end: span 1;
-    background-color: #E62348;
-    margin: 0rem 1rem 2vh 1rem;
-    border-radius: 3rem;
+    background-color: #393e46;
+    margin: 0rem 1rem 2.5vh 1rem;
+    padding-bottom: 2vh;
+    padding-top: 2vh;
+    border-radius: 0.3rem;
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 
 .legend-card-header{
-    padding: 0.8rem;
+    padding: 1rem 0.8rem 0.8rem 0.8rem;
 }
 
 .legend-card-header > .ui.medium.header {
@@ -90,7 +63,10 @@
 }
 
 .statistic > .label {
-    font-family: 'Lato' !important;
+    font-family: 'Nunito Sans', cursive;
+    font-size: 1.5vh;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .legend-card-content {
@@ -103,12 +79,12 @@
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     margin: 1rem 2rem 0rem 2rem;
+    grid-column-gap: 1vh;
 }
 
 .legend-card-image > img {
-    max-height: 30vh;
+    max-height: 19vh;
     margin: 0vh 0vh 1vh 1vh;
-    /* background-color: aliceblue; */
 }
 
 .comments-container {
@@ -116,8 +92,61 @@
     grid-row: auto;
     margin-bottom: 30vh;
     margin-top: 10vh;
+    background-color: #393e46;
+    margin: 0rem 1rem 2.5vh 1rem;
+    padding-bottom: 4vh;
+    padding-top: 4vh;
+    padding-left: 4vh;
+    border-radius: 0.3rem;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 
-div.comments-container * {
-    color: black !important;
+.overview-stats-container{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: auto;
+    grid-column-gap: 0.8vh;
+    grid-row-gap: 0.9vh;
+}
+
+.overview.statistic {
+    grid-column: auto / span 1;
+    grid-row: auto;
+    text-align: center;
+}
+.value {
+    font-family: 'Saira Extra Condensed', sans-serif;
+    font-size: 2.5vh;
+    font-weight: 700;
+}
+
+.label {
+    font-family: 'Big Shoulders Display', cursive;
+    font-size: 1.5vh;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.ui.card {
+    background-color: #393e46
+}
+
+.ui.segment {
+    background-color: #393e46;
+    padding: 0.8rem;
+    border-radius: 0.3rem;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    margin: 0rem 1rem 2vh 1rem;
+    padding-bottom: 5vh;
+    padding-top: 5vh;
+}
+
+.ui.medium.centered.header, .ui.medium.header, .ui.dividing.header {
+    font-family: 'Saira Extra Condensed';
+    font-size: 3vh;
+    font-weight: 500;
+}
+
+.comments-container * {
+    color: honeydew !important
 }
